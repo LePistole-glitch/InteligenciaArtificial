@@ -1,0 +1,113 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Librerias\n",
+    "#Ejemplo e logica difusa para deterinar mediante reglas\n",
+    "#de inferecia cuanta propina dar en un restaurante\n",
+    "#variables de entrada son: calidad [0-10] y calidad de comida de [0-10]\n",
+    "import numpy as np\n",
+    "import skfuzzy as fuzz\n",
+    "import matplotlib.pyplot as plt\n",
+    "import sys"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "if len(sys.argv)>2:\n",
+    "    cal_comida = sys.argv[1]\n",
+    "    cal_servicio = sys.argv[2]\n",
+    "else:\n",
+    "    cal_comida = 8\n",
+    "    cal_servicio = 6"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#funcions de entrda y salida\n",
+    "x_qual = np.arange(0,11,1) #calidad de comida\n",
+    "x_serv = np.arange(0,11,1)#calidad de servicio\n",
+    "x_tip = np.arange(5,26,1)#Porcentaje de propina\n",
+    "#func de memebresia\n",
+    "#calidad de comida [mala][decente][aceptable][]\n",
+    "#calidad de servicio [mala][decente][aceptable][]\n",
+    "#propinas [mala][decente][aceptable][]\n",
+    "#funcions de memebresia de calidad de comida\n",
+    "qual_lo = fuzz.trimf(x_qual, [0,0,5])   #-- 0-1 5-0 \\\n",
+    "qual_md = fuzz.trimf(x_qual, [0,5,10])  # 0-0 5-1 10-0/\\\n",
+    "qual_hi = fuzz.trimf(x_qual, [5,10,10]) #5-0 10-1 --/\n",
+    "#func de memebresia de calidad del sevicio\n",
+    "serv_lo = fuzz.trimf(x_serv, [0,0,5])   #-- 0-1 5-0 \\\n",
+    "serv_md = fuzz.trimf(x_serv, [0,5,10])  # 0-0 5-1 10-0/\\\n",
+    "serv_hi = fuzz.trimf(x_serv, [5,10,10]) #5-0 10-1 --/\n",
+    "#func de membresia de caliad de la propina\n",
+    "tip_lo = fuzz.trimf(x_tip, [5,5,13])   #-- 0-1 5-0 \\\n",
+    "tip_md = fuzz.trimf(x_tip, [5,13,25])  # 5-0 13-1 25-0/\\\n",
+    "tip_hi = fuzz.trimf(x_tip, [13,25,25]) #13-0 25-1 --/"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "ValueError",
+     "evalue": "could not convert string to float: '--ip=127.0.0.1'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mValueError\u001b[0m                                Traceback (most recent call last)",
+      "\u001b[1;32mc:\\Users\\chave\\OneDrive\\Escritorio\\9no Semestre\\Inteligencia Artificial\\ejercisio_difuso.ipynb Cell 4\u001b[0m line \u001b[0;36m1\n\u001b[1;32m----> <a href='vscode-notebook-cell:/c%3A/Users/chave/OneDrive/Escritorio/9no%20Semestre/Inteligencia%20Artificial/ejercisio_difuso.ipynb#W4sZmlsZQ%3D%3D?line=0'>1</a>\u001b[0m qual_level_lo \u001b[39m=\u001b[39m fuzz\u001b[39m.\u001b[39;49minterp_membership(x_qual, qual_lo, cal_comida)\n\u001b[0;32m      <a href='vscode-notebook-cell:/c%3A/Users/chave/OneDrive/Escritorio/9no%20Semestre/Inteligencia%20Artificial/ejercisio_difuso.ipynb#W4sZmlsZQ%3D%3D?line=1'>2</a>\u001b[0m qual_level_md \u001b[39m=\u001b[39m fuzz\u001b[39m.\u001b[39minterp_membership(x_qual, qual_md, cal_comida)\n\u001b[0;32m      <a href='vscode-notebook-cell:/c%3A/Users/chave/OneDrive/Escritorio/9no%20Semestre/Inteligencia%20Artificial/ejercisio_difuso.ipynb#W4sZmlsZQ%3D%3D?line=2'>3</a>\u001b[0m qual_level_hi \u001b[39m=\u001b[39m fuzz\u001b[39m.\u001b[39minterp_membership(x_qual, qual_hi, cal_comida)\n",
+      "File \u001b[1;32mc:\\Users\\chave\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\skfuzzy\\fuzzymath\\fuzzy_ops.py:572\u001b[0m, in \u001b[0;36minterp_membership\u001b[1;34m(x, xmf, xx, zero_outside_x)\u001b[0m\n\u001b[0;32m    570\u001b[0m \u001b[39melse\u001b[39;00m:\n\u001b[0;32m    571\u001b[0m     kwargs \u001b[39m=\u001b[39m (\u001b[39m0.0\u001b[39m, \u001b[39m0.0\u001b[39m)\n\u001b[1;32m--> 572\u001b[0m \u001b[39mreturn\u001b[39;00m np\u001b[39m.\u001b[39;49minterp(xx, x, xmf, left\u001b[39m=\u001b[39;49mkwargs[\u001b[39m0\u001b[39;49m], right\u001b[39m=\u001b[39;49mkwargs[\u001b[39m1\u001b[39;49m])\n",
+      "File \u001b[1;32mc:\\Users\\chave\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\numpy\\lib\\function_base.py:1599\u001b[0m, in \u001b[0;36minterp\u001b[1;34m(x, xp, fp, left, right, period)\u001b[0m\n\u001b[0;32m   1596\u001b[0m     xp \u001b[39m=\u001b[39m np\u001b[39m.\u001b[39mconcatenate((xp[\u001b[39m-\u001b[39m\u001b[39m1\u001b[39m:]\u001b[39m-\u001b[39mperiod, xp, xp[\u001b[39m0\u001b[39m:\u001b[39m1\u001b[39m]\u001b[39m+\u001b[39mperiod))\n\u001b[0;32m   1597\u001b[0m     fp \u001b[39m=\u001b[39m np\u001b[39m.\u001b[39mconcatenate((fp[\u001b[39m-\u001b[39m\u001b[39m1\u001b[39m:], fp, fp[\u001b[39m0\u001b[39m:\u001b[39m1\u001b[39m]))\n\u001b[1;32m-> 1599\u001b[0m \u001b[39mreturn\u001b[39;00m interp_func(x, xp, fp, left, right)\n",
+      "\u001b[1;31mValueError\u001b[0m: could not convert string to float: '--ip=127.0.0.1'"
+     ]
+    }
+   ],
+   "source": [
+    "qual_level_lo = fuzz.interp_membership(x_qual, qual_lo, cal_comida)\n",
+    "qual_level_md = fuzz.interp_membership(x_qual, qual_md, cal_comida)\n",
+    "qual_level_hi = fuzz.interp_membership(x_qual, qual_hi, cal_comida)\n",
+    "\n",
+    "serv_level_lo = fuzz.interp_membership(x_serv, serv_lo, cal_servicio)\n",
+    "serv_level_md = fuzz.interp_membership(x_serv, serv_md, cal_servicio)\n",
+    "serv_level_hi = fuzz.interp_membership(x_serv, serv_hi, cal_servicio)\n",
+    "\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
