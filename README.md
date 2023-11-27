@@ -7,16 +7,16 @@ Este repositorio contiene códigos y archivos correspondientes a la Clase de Int
 
 Asegúrate de tener instalada la versión adecuada de Python:
 
-Uso
+## Uso
 Clona este repositorio:
 
 git clone https://github.com/LePistole-glitch/InteligenciaArtificial.git
-cd Inteligencia Artificial
+
 
 Explora el contenido en las carpetas algoritmos, datasets, y notebooks.
 Ejecuta los códigos en tu entorno de desarrollo.
 
-Contribuciones
+## Contribuciones
 
 Siéntete libre de contribuir a este proyecto mediante pull requests. ¡Toda ayuda es bienvenida!
 
